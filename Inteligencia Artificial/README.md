@@ -1,24 +1,38 @@
-# Descripción del Proyecto
+# One Piece Character Classifier
 
-## Sobre el Conjunto de Datos
-El conjunto de datos original de Kaggle contiene todas las imágenes sin una estructura definida por clase. Con el fin de mejorar la eficiencia del desarrollo del modelo y reducir posibles desequilibrios, las imágenes se dividirán en tres categorías principales:
+## About Dataset
+The dataset used for this project contains images of characters from the anime and manga series One Piece. The dataset is structured with each character's images stored in a separate folder, named after the character. This structure makes it convenient for organizing and processing the dataset for training a model to classify One Piece characters.
 
-- **Entrenamiento (Train):** Contiene el 70% de las imágenes de cada clase y se utiliza para entrenar el modelo.
-- **Validación (Validation):** Aquí se evalúa el rendimiento del modelo durante el entrenamiento, permitiendo ajustar los hiperparámetros antes de la fase de prueba. Contendrá el 15% de las imágenes de cada clase.
-- **Prueba (Test):** Permite evaluar el rendimiento del modelo frente a imágenes que nunca ha visto durante la fase de entrenamiento. También contendrá el 15% de las imágenes de cada clase.
+## Goal
+The goal of this project is to develop an image classifier capable of identifying characters from One Piece. The classifier will be trained on the dataset mentioned above and will be able to classify images into the respective character classes.
 
-## Descarga del Conjunto de Datos
-Puedes descargar el conjunto de datos original de Kaggle desde [aquí](https://www.kaggle.com/datasets/ibrahimserouis99/one-piece-image-classifier?select=Data). Ten en cuenta que las imágenes en este conjunto de datos no son propiedad del creador de este proyecto.
+## Dataset Preparation
+To prepare the dataset for training, it will be split into three main categories: train, test, and validation. This division ensures that the model is trained on a diverse set of images and evaluated on unseen data to measure its performance accurately.
 
-## Preprocesamiento de los Datos
-El preprocesamiento de imágenes es una fase relevante para preparar los datos antes de entrenar un modelo de clasificación de imágenes. En este proyecto, se utiliza `ImageDataGenerator` de TensorFlow para realizar una serie de transformaciones en las imágenes del conjunto de datos.
+- **Train (70%)**: This category will be used to train the model and will contain approximately 70% of the images of each character.
 
-### Detalles del Preprocesamiento
-- **Redimensionamiento de Imágenes:** Todas las imágenes se redimensionan a 150x150 píxeles para asegurar una entrada consistente en el modelo, independientemente de las dimensiones originales de las imágenes.
-- **Normalización de los Valores de los Píxeles:** Se escalan los valores de los píxeles de las imágenes al rango [0, 1].
-- **Data Augmentation (Aumento de Datos):** Se aplican diversas transformaciones en el conjunto de entrenamiento para incrementar la diversidad del conjunto de datos, como rotaciones, desplazamientos, cortes, zoom y volteo horizontal.
+- **Validation (15%)**: The validation category is used to evaluate the model's performance during training. It helps in adjusting the model's hyperparameters to prevent overfitting or underfitting. The validation category will contain around 15% of the images.
 
-### Generador de Datos
-`ImageDataGenerator` genera lotes de datos de imágenes con un tamaño de 64 imágenes por lote. Para fines didácticos, se guarda ejemplos de imágenes aumentadas en la carpeta "augmented" con el prefijo "aug" y en formato PNG.
+- **Test (15%)**: The test category is used to evaluate the model's performance on unseen data. It also contains around 15% of the images of each character.
 
-En el archivo "model.py", se mantiene la misma arquitectura descrita anteriormente para el preprocesamiento de las imágenes de entrenamiento. Sin embargo, se ha agregado un preprocesamiento similar para los conjuntos de validación y prueba, conservando una arquitectura simplificada para estos conjuntos para garantizar una evaluación precisa del rendimiento del modelo en situaciones del mundo real.
+## Data Preprocessing
+Data preprocessing is a crucial step in preparing the images for training a classification model. In this project, the following preprocessing steps are applied using TensorFlow's ImageDataGenerator:
+
+- **Resizing Images**: All images are resized to 150x150 pixels to ensure consistent input size for the model, regardless of the original image dimensions.
+
+- **Normalization**: The pixel values of the images are normalized to the range [0, 1] by dividing each pixel value by 255.
+
+- **Data Augmentation**: Data augmentation is applied to increase the diversity of the training dataset. The following transformations are applied to the training set:
+
+  - Rotation: Images can be rotated up to 90 degrees.
+  - Width and height shift: Images can be horizontally and vertically shifted up to 20% of their size.
+  - Shear: The shear transformation distorts the shape of an image. The shear transformation can vary randomly up to a maximum of approximately 0.2 radians (11.46 degrees).
+  - Zoom: Images can be zoomed in by up to 20%.
+  - Horizontal flip: Images can be horizontally flipped.
+
+- **Class Mode**: The class mode parameter specifies the format of the labels generated for the data. In this case, since the model is intended to classify various classes, the class parameter is set to categorical.
+
+A data generator is used to generate batches of image data with a batch size of 64 images per batch. For educational purposes, examples of augmented images are saved in the "augmented" folder with the prefix "aug" and in PNG format.
+
+## How to Download the Dataset
+You can download the dataset from [Kaggle](https://www.kaggle.com/datasets/ibrahimserouis99/one-piece-image-classifier?select=Data). Please note that the images in this dataset are not owned by the creator of this project.
