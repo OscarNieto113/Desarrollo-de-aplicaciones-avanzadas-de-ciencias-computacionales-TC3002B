@@ -21,7 +21,4 @@ El preprocesamiento de imágenes es una fase relevante para preparar los datos a
 ### Generador de Datos
 `ImageDataGenerator` genera lotes de datos de imágenes con un tamaño de 64 imágenes por lote. Para fines didácticos, se guarda ejemplos de imágenes aumentadas en la carpeta "augmented" con el prefijo "aug" y en formato PNG.
 
-## Ejemplo de Imágenes Generadas
-![Ejemplo de Imágenes Generadas](link_to_image)
-
 En el archivo "model.py", se mantiene la misma arquitectura descrita anteriormente para el preprocesamiento de las imágenes de entrenamiento. Sin embargo, se ha agregado un preprocesamiento similar para los conjuntos de validación y prueba, conservando una arquitectura simplificada para estos conjuntos para garantizar una evaluación precisa del rendimiento del modelo en situaciones del mundo real.
