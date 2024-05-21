@@ -37,7 +37,12 @@ Data preprocessing is a crucial step in preparing the images for training a clas
 
 - **Class Mode**: The class mode parameter specifies the format of the labels generated for the data. In this case, since the model is intended to classify various classes, the class parameter is set to categorical.
 
-A data generator is used to generate batches of image data with a batch size of 64 images per batch. For educational purposes, examples of augmented images are saved in the "augmented" folder with the prefix "aug" and in PNG format.
-
 ## How to Download the Dataset
 You can download the dataset from [Kaggle](https://www.kaggle.com/datasets/ibrahimserouis99/one-piece-image-classifier?select=Data). Please note that the images in this dataset are not owned by the creator of this project.
+
+## How to use the program
+1. Download the dataset
+2. Extract all the files
+3. Copy and Paste the folder called /Data in to the folder of the repository Artificial Intelligence
+4. Uncomment the function setup_and_split_dataset from the code
+5. Run the code
