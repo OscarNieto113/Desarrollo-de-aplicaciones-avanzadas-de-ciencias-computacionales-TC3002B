@@ -7,7 +7,13 @@ The dataset used for this project contains images of characters from the anime a
 The goal of this project is to develop an image classifier capable of identifying characters from One Piece. The classifier will be trained on the dataset mentioned above and will be able to classify images into the respective character classes.
 
 ## Dataset Preparation
-To prepare the dataset for training, it will be split into three main categories: train, test, and validation. This division ensures that the model is trained on a diverse set of images and evaluated on unseen data to measure its performance accurately.
+Using separate sets for training, testing and validation is a fundamental practice for the following reasons:
+
+**Model Performance Evaluation:** One of the primary goals of machine learning is to build models that generalize well to unseen data. By splitting your dataset into three subsets, we can assess your model's performance accurately.
+
+**Identify Overfitting:** The test set serves as a benchmark to check for overfitting. If a model performs well on the training data but poorly on the test data, it's a sign of overfitting.
+
+**Hyperparameter Tuning:** To optimize the model's hyperparameters, we need a validation set. You can train multiple models with different hyperparameters and select the one that performs best on the validation set
 
 - **Train (70%)**: This category will be used to train the model and will contain approximately 70% of the images of each character.
 
@@ -16,19 +22,18 @@ To prepare the dataset for training, it will be split into three main categories
 - **Test (15%)**: The test category is used to evaluate the model's performance on unseen data. It also contains around 15% of the images of each character.
 
 ## Data Preprocessing
-Data preprocessing is a crucial step in preparing the images for training a classification model. In this project, the following preprocessing steps are applied using TensorFlow's ImageDataGenerator:
+Data preprocessing is a crucial step in preparing the images for training a classification model.:
 
 - **Resizing Images**: All images are resized to 150x150 pixels to ensure consistent input size for the model, regardless of the original image dimensions.
 
 - **Normalization**: The pixel values of the images are normalized to the range [0, 1] by dividing each pixel value by 255.
 
-- **Data Augmentation**: Data augmentation is applied to increase the diversity of the training dataset. The following transformations are applied to the training set:
+- **Data Augmentation**: Data augmentation involves applying various transformations to the existing dataset to create new, diverse training examples. In the context of garbage classification, these transformations typically include rotations, flips, shifts, zooms, and changes in brightness. The goal is to artificially expand the training dataset, providing the model with more varied examples to learn from.
 
-  - Rotation: Images can be rotated up to 90 degrees.
-  - Width and height shift: Images can be horizontally and vertically shifted up to 20% of their size.
-  - Shear: The shear transformation distorts the shape of an image. The shear transformation can vary randomly up to a maximum of approximately 0.2 radians (11.46 degrees).
-  - Zoom: Images can be zoomed in by up to 20%.
-  - Horizontal flip: Images can be horizontally flipped.
+- **Training Dataset Only:** Data augmentation is typically applied to the training dataset. This ensures that the model learns from augmented examples during training but is evaluated on unaltered data during validation and testing.
+
+- **Evaluation on Unaltered Data:** The validation and test datasets remain untouched by data augmentation. This separation is crucial for assessing how well the model generalizes to real-world, unaltered scenarios.
+
 
 - **Class Mode**: The class mode parameter specifies the format of the labels generated for the data. In this case, since the model is intended to classify various classes, the class parameter is set to categorical.
 
