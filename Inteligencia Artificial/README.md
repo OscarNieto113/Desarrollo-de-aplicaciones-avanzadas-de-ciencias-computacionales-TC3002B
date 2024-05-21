@@ -6,7 +6,7 @@ The dataset used for this project contains images of characters from the anime a
 ## Goal
 The goal of this project is to develop an image classifier capable of identifying characters from One Piece. The classifier will be trained on the dataset mentioned above and will be able to classify images into the respective character classes.
 
-## Dataset Preparation
+## [Dataset Preparation](https://www.analyticsvidhya.com/blog/2023/11/train-test-validation-split/#:~:text=the%20following%20aspects%3A-,Training%2C%20Validation%2C%20and%20Testing,model%27s%20performance%20on%20new%20data.)
 Using separate sets for training, testing and validation is a fundamental practice for the following reasons:
 
 **Model Performance Evaluation:** One of the primary goals of machine learning is to build models that generalize well to unseen data. By splitting your dataset into three subsets, we can assess your model's performance accurately.
@@ -21,14 +21,14 @@ Using separate sets for training, testing and validation is a fundamental practi
 
 - **Test (15%)**: The test category is used to evaluate the model's performance on unseen data. It also contains around 15% of the images of each character.
 
-## Data Preprocessing
+## [Data Preprocessing](https://www.geeksforgeeks.org/data-preprocessing-in-data-mining/)
 Data preprocessing is a crucial step in preparing the images for training a classification model.:
 
 - **Resizing Images**: All images are resized to 150x150 pixels to ensure consistent input size for the model, regardless of the original image dimensions.
 
 - **Normalization**: The pixel values of the images are normalized to the range [0, 1] by dividing each pixel value by 255.
 
-- **Data Augmentation**: Data augmentation involves applying various transformations to the existing dataset to create new, diverse training examples. In the context of garbage classification, these transformations typically include rotations, flips, shifts, zooms, and changes in brightness. The goal is to artificially expand the training dataset, providing the model with more varied examples to learn from.
+- [Data Augmentation](https://aws.amazon.com/es/what-is/data-augmentation/#:~:text=Data%20augmentation%20is%20the%20process,machine%20learning%20(ML)%20models.): Data augmentation involves applying various transformations to the existing dataset to create new, diverse training examples. In the context of garbage classification, these transformations typically include rotations, flips, shifts, zooms, and changes in brightness. The goal is to artificially expand the training dataset, providing the model with more varied examples to learn from.
 
 - **Training Dataset Only:** Data augmentation is typically applied to the training dataset. This ensures that the model learns from augmented examples during training but is evaluated on unaltered data during validation and testing.
 
