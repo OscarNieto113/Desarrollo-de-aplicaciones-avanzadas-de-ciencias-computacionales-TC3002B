@@ -6,14 +6,33 @@ The dataset used for this project contains images of characters from the anime a
 ## Goal
 The goal of this project is to develop an image classifier capable of identifying characters from One Piece. The classifier will be trained on the dataset mentioned above and will be able to classify images into the respective character classes.
 
-## [Dataset Preparation](https://www.analyticsvidhya.com/blog/2023/11/train-test-validation-split/#:~:text=the%20following%20aspects%3A-,Training%2C%20Validation%2C%20and%20Testing,model%27s%20performance%20on%20new%20data.)
-Using separate sets for training, testing and validation is a fundamental practice for the following reasons:
+## Papers utilizados en la implementación:
+- [Image Classification Based On CNN: A Survey](https://www.researchgate.net/publication/355800126_Image_Classification_Based_On_CNN_A_Survey)
+- [Binary cross entropy with deep learning technique for
+Image classification](https://www.researchgate.net/profile/Vamsidhar-Yendapalli/publication/344854379_Binary_cross_entropy_with_deep_learning_technique_for_Image_classification/links/5f93eed692851c14bce1ac68/Binary-cross-entropy-with-deep-learning-technique-for-Image-classification.pdf)
 
-**Model Performance Evaluation:** One of the primary goals of machine learning is to build models that generalize well to unseen data. By splitting your dataset into three subsets, we can assess your model's performance accurately.
 
-**Identify Overfitting:** The test set serves as a benchmark to check for overfitting. If a model performs well on the training data but poorly on the test data, it's a sign of overfitting.
+1. Applied Preprocessing
 
-**Hyperparameter Tuning:** To optimize the model's hyperparameters, we need a validation set. You can train multiple models with different hyperparameters and select the one that performs best on the validation set
+## ImageDataGenerator for Training, Testing, and Validation
+
+Three instances of `ImageDataGenerator` are created: one for training data (`train_datagen`), one for testing data (`test_datagen`), and one for validation data (`validation_datagen`). Each instance applies the following data augmentation transformations to the images:
+
+- **rescale=1./255**: Normalizes pixel values to the range [0, 1] by dividing each pixel value by 255.
+- **rotation_range=90**: Randomly rotates images up to 90 degrees.
+- **width_shift_range=0.2**: Randomly shifts images horizontally.
+- **height_shift_range=0.2**: Randomly shifts images vertically.
+- **shear_range=0.2**: Randomly applies shearing transformations.
+- **zoom_range=0.2**: Randomly zooms in on images.
+- **horizontal_flip=True**: Randomly flips images horizontally.
+
+### Justification
+The transformations applied by `ImageDataGenerator` introduce variety into the training, testing, and validation datasets, which helps the model become more robust and generalize better. Normalizing pixel values ensures that the data is in a suitable range for the model, while transformations such as rotation, shifting, shearing, zooming, and flipping introduce variability that can enhance the model's ability to recognize different variations of the anime character images.
+
+#### Image Data Generators
+
+Image data generators are created for training (`train_generator`), testing (`test_generator`), and validation (`validation_generator`) using the corresponding data directories. All generators have a target size of `(150, 150)` to resize the images to 150x150 pixels. A batch size of 32 is specified for each generator.
+
 
 - **Train (70%)**: This category will be used to train the model and will contain approximately 70% of the images of each character.
 
@@ -28,14 +47,33 @@ Data preprocessing is a crucial step in preparing the images for training a clas
 
 - **Normalization**: The pixel values of the images are normalized to the range [0, 1] by dividing each pixel value by 255.
 
-- [Data Augmentation](https://aws.amazon.com/es/what-is/data-augmentation/#:~:text=Data%20augmentation%20is%20the%20process,machine%20learning%20(ML)%20models.): Data augmentation involves applying various transformations to the existing dataset to create new, diverse training examples. In the context of garbage classification, these transformations typically include rotations, flips, shifts, zooms, and changes in brightness. The goal is to artificially expand the training dataset, providing the model with more varied examples to learn from.
+## 2. Algorithm Selection
 
-- **Training Dataset Only:** Data augmentation is typically applied to the training dataset. This ensures that the model learns from augmented examples during training but is evaluated on unaltered data during validation and testing.
+### Character Classification as an Image Classification Problem
 
-- **Evaluation on Unaltered Data:** The validation and test datasets remain untouched by data augmentation. This separation is crucial for assessing how well the model generalizes to real-world, unaltered scenarios.
+Classifying characters from One Piece can be considered an image classification problem, as it involves identifying and labeling the presence of specific characters within images. Image classification tasks are well-suited for Convolutional Neural Networks (CNNs), which are designed to recognize patterns and features in image data.
 
+In this context, the goal is to accurately identify characters such as Luffy, Zoro, Nami, and others from the One Piece series in various images. This requires the model to learn the unique characteristics of each character, including facial features, clothing, and other visual attributes.
 
-- **Class Mode**: The class mode parameter specifies the format of the labels generated for the data. In this case, since the model is intended to classify various classes, the class parameter is set to categorical.
+### Choosing Between Different Neural Network Models
+
+The choice of neural network model for character classification depends on several factors, including the complexity of the character patterns, the amount of available data, and the requirements for model performance and efficiency.
+
+- **Complexity of Character Patterns**: If the character patterns are distinct and well-defined, a standard CNN might be sufficient to achieve accurate classification. However, if the characters have more complex and varied appearances, deeper and more sophisticated CNN architectures such as ResNet, Inception, or VGG may be more suitable.
+
+- **Amount of Available Data**: CNNs generally perform well with large amounts of training data. In your project, you have a substantial dataset of 31,575 images, which should provide ample data for the model to learn effectively. This quantity of data supports the use of a more complex CNN model if needed.
+
+- **Model Performance and Efficiency**: For applications requiring high accuracy, deeper CNN architectures can be beneficial. If computational efficiency and speed are critical, models like MobileNet or EfficientNet, which are designed to be lightweight and fast, may be considered.
+
+### Justification for Choosing a Convolutional Neural Network (CNN)
+
+The decision to use a Convolutional Neural Network (CNN) for character classification in your project is justified by the following factors:
+
+1. **Distinct Patterns**: The characters from One Piece have distinct visual patterns and features that a CNN can learn to recognize effectively.
+2. **Sufficient Data**: With 31,575 images in your dataset, there is enough data to train a CNN to achieve good performance.
+3. **Proven Effectiveness**: CNNs have a proven track record in image classification tasks, making them a reliable choice for this project.
+
+Given these considerations, a CNN architecture with several convolutional and pooling layers, followed by dense layers, is expected to perform well in classifying One Piece characters accurately and efficiently.
 
 ## How to Download the Dataset
 You can download the dataset from [Kaggle](https://www.kaggle.com/datasets/ibrahimserouis99/one-piece-image-classifier?select=Data). Please note that the images in this dataset are not owned by the creator of this project.
