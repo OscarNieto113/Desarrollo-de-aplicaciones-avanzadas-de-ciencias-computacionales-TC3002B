@@ -1,4 +1,6 @@
-*.jpg
-*.png
-*.jpeg
+Data/
+No Data/
+Dataset_Split/
 *.h5
+
+

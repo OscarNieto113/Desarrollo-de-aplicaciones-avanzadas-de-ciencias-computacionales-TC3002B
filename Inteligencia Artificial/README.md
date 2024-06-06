@@ -141,11 +141,64 @@ The architecture of the Convolutional Neural Network (CNN) used for character cl
 - Despite the overfitting, the validation accuracy is still relatively high, which means the model generalizes somewhat well to unseen data.
 
 ### 4.2 Metrics
+![Graph](ReadmeImages/output3.png)
+- - Accuracy:  0.5329949238578681
+- - Precision: 0.5331
+- - Recall: 0.5330
+- - F1-score: 0.5329
 
 
+- The model's performance is slightly above random guessing. The accuracy of 0.533 suggests the model can distinguish between Chopper and Jinbe to some extent, but there's still room for improvement.
+- There are still some misclassified Jinbe images labelled as Chopper.
+- The model misses some Chopper images.
+
+## 5. Model improovements
+The improved model contribute to better performance in classifying, these are the characteristics of the new model:
+
+- Regularization: This helps prevent overfitting by penalizing large weights, encouraging the model to learn more generalizable features.
+- Batch Normalization: This technique helps normalize the activations of neurons, accelerating training and potentially improving performance.
+- Dropout: This randomly drops out a percentage of neurons during training, preventing the model from overfitting to specific training examples.
+- Hyperparameter Tuning: This hyperparameter tuning can significantly impact the model's ability to learn and converge.
+
+### 5.1 Training and validation accuracy/loss
+![Graph](ReadmeImages/output4.png)
+The trends in accuracy and loss for the new model strongly suggest that the changes were effective. The new model with L2 regularization, BatchNormalization, Dropout, and potentially a better learning rate is performing significantly better than the previous model.
+
+- Validation Accuracy: The new model generalizes better to unseen data, achieving a high validation accuracy close to 1.
+- Validation Loss: The new model shows less overfitting compared to the previous model, with the validation loss remaining lower than the training loss.
+
+### 5.2 Metrics
+![Graph](ReadmeImages/output5.png)
+- Accuracy:  0.5736040609137056
+- Precision: 0.5744
+- Recall: 0.5736
+- F1-score: 0.5719
+
+## 6. Conclusions
+While the new model shows some improvement in terms of overfitting based on the accuracy and loss , the overall performance metrics (accuracy, precision, recall, F1-score) haven't seen a significant leap compared to the previous model (accuracy: 0.533).
+
+### Previous Model:
+- The previous model likely struggled with overfitting, leading to a moderate accuracy (around 0.53) on unseen data.
+- It might have had issues differentiating between Chopper and Jinbe in some cases.
+
+### New Model:
+- The new model's accuracy (0.57) on the test dataset shows a slight improvement, suggesting it generalizes a bit better than the previous model.
+However, the precision (0.5744), recall (0.5736), and F1-score (0.5719) remain relatively low, indicating that the model still struggles with correctly classifying.
+
+### Possible Reasons for Limited Improvement:
+- Data Size: The size and diversity of the training data might be insufficient for the model to learn robust features for distinguishing the two characters.
+- Model Complexity: The current architecture might not be complex enough to capture the differences between Chopper and Jinbe.
+- Hyperparameter Tuning: The learning rate or other hyperparameters might not be optimally tuned for this specific problem.
 
 ## How to Download the Dataset
 You can download the dataset from [Kaggle](https://www.kaggle.com/datasets/ibrahimserouis99/one-piece-image-classifier?select=Data). Please note that the images in this dataset are not owned by the creator of this project.
+
+## Download the model:
+You can download the models here:
+
+[Modelv1](https://drive.google.com/file/d/1A9rezvoUsA1O-5YJ-SS3RBCAKnACDYG4/view?usp=sharing)
+
+[Modelv2](https://drive.google.com/file/d/1XpYVzHuF9k2RJM3ZyGmeYBh8rX1ps-2m/view?usp=sharing)
 
 ## How to use the program
 1. Download the dataset
