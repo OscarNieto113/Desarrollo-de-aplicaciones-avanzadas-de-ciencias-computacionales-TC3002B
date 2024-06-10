@@ -722,7 +722,7 @@ def table_generator():
             the processed code file pair.
   """
 
-  directorio_principal = 'flask-backend/queries/'
+  directorio_principal = 'queries/'
   data = []
 
   compare = Compare()
