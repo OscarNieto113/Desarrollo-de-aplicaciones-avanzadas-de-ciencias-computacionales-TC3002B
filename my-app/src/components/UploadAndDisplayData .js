@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Doughnut } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const UploadAndDisplayData = () => {
   const [data, setData] = useState(null);
-  const [prediction, setPrediction] = useState(null);
+  const [predictionProb, setPredictionProb] = useState(null);
   const [file1, setFile1] = useState(null);
   const [file2, setFile2] = useState(null);
+  const [feedback, setFeedback] = useState(null);
 
   const handleFileChange = (event, setFile) => {
     setFile(event.target.files[0]);
@@ -20,10 +25,28 @@ const UploadAndDisplayData = () => {
     try {
       const response = await axios.post('http://127.0.0.1:5000/api/upload', formData);
       setData(response.data.data[0]);
-      setPrediction(response.data.prediction);
+      setPredictionProb(response.data.prediction_prob);
+      setFeedback(null); // Reset feedback when new prediction is made
     } catch (error) {
       console.error('Error uploading files:', error);
     }
+  };
+
+  const handleFeedback = (isGood) => {
+    setFeedback(isGood);
+    // Optionally, send feedback to the server
+    console.log(`Feedback: ${isGood ? 'Good' : 'Bad'}`);
+  };
+
+  const chartData = {
+    labels: ['Class 0', 'Class 1'],
+    datasets: [
+      {
+        data: predictionProb ? predictionProb.map(prob => prob * 100) : [],
+        backgroundColor: ['#FF6384', '#36A2EB'],
+        hoverBackgroundColor: ['#FF6384', '#36A2EB'],
+      },
+    ],
   };
 
   return (
@@ -76,7 +99,25 @@ const UploadAndDisplayData = () => {
             </tbody>
           </table>
           <div className="p-4">
-            <h2 className="text-xl font-bold">Prediction: {prediction}</h2>
+            <h2 className="text-xl font-bold mb-4">Prediction Probabilities:</h2>
+            <div className="doughnut-chart-container" style={{ width: '300px', height: '300px', margin: '0 auto' }}>
+              <Doughnut data={chartData} />
+            </div>
+            <div className="mt-4 flex justify-center space-x-4">
+              <p>Was the prediction was accurate?</p>
+              <button
+                onClick={() => handleFeedback(true)}
+                className={`px-4 py-2 rounded-md shadow-md ${feedback === true ? 'bg-green-500 text-white' : 'bg-gray-300'}`}
+              >
+                Yes
+              </button>
+              <button
+                onClick={() => handleFeedback(false)}
+                className={`px-4 py-2 rounded-md shadow-md ${feedback === false ? 'bg-red-500 text-white' : 'bg-gray-300'}`}
+              >
+                No
+              </button>
+            </div>
           </div>
         </div>
       )}

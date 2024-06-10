@@ -1,9 +1,8 @@
 import os
-import pickle
 import features
+import joblib
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import numpy as np
 
 app = Flask(__name__)
 CORS(app)
@@ -12,19 +11,11 @@ UPLOAD_FOLDER = 'queries'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# Cargar el modelo
-with open('model.pkl', 'rb') as model_file:
-    model = pickle.load(model_file)
-
 # Puerto de Flask
 PORT = 5000
 
-def convert_to_serializable(obj):
-    if isinstance(obj, np.int32):
-        return int(obj)
-    elif isinstance(obj, np.float32):
-        return float(obj)
-    return obj
+# Cargar el modelo
+model = joblib.load('model.pkl')
 
 @app.route('/api/upload', methods=['POST'])
 def upload_files():
@@ -40,11 +31,13 @@ def upload_files():
     data = features.table_generator()
     print(data)
 
-    # Hacer una predicción
-    prediction = model.predict([list(data[0].values())])[0]
+    # Realizar la predicción con el modelo
+    features_array = list(data[0].values())  # Convertir los valores del diccionario a una lista
+    prediction_prob = model.predict_proba([features_array])[0]
+
     response = {
         'data': data,
-        'prediction': convert_to_serializable(prediction)
+        'prediction_prob': prediction_prob.tolist()  # Convertir a lista para que sea serializable en JSON
     }
 
     return jsonify(response)
